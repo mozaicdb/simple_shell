@@ -1,5 +1,12 @@
 #include "shell.h"
 
+/**
+ * execute -function that executes commands
+ * @command: command passed
+ * @args: argument count
+ * Return: void
+ */
+
 void execute(char *command, char *args[])
 {
 	int status;
@@ -13,7 +20,6 @@ void execute(char *command, char *args[])
 	}
 	else if (my_pid == 0)
 	{
-		char *envp[] = {NULL};
 		av[0] = strdup(command);
 		if (execvp(command, args) == -1)
 			perror("execve failed");

@@ -14,5 +14,7 @@
 extern char **environ;
 
 int findpath(char *command);
+void print_env();
+int display();
 void execute(char *command, char *args[]);
 #endif

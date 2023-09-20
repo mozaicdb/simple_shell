@@ -1,19 +1,29 @@
 #include "shell.h"
 
+/**
+ * findpath - finds the path variable
+ * @command: command passed
+ * Return: Always 0
+ */
+
 int findpath(char* command)
 {
 	char *env_path = getenv("PATH");
+	char *full_path;
+	char *piece;
+	char *path_copy;
+
 	if (env_path == NULL)
 	{
 		perror("getenv failed");
 		return 0;
 	}
-	char* path_copy = strdup(env_path);
+	path_copy = strdup(env_path);
 
-	char* piece = strtok(path_copy, ":");
+	piece = strtok(path_copy, ":");
 	while (piece != NULL)
 	{
-		char *full_path = malloc(strlen(piece) + strlen(command) + 2);
+		full_path = malloc(strlen(piece) + strlen(command) + 2);
 		if (full_path == NULL)
 		{
 			perror("malloc failed");
@@ -21,14 +31,16 @@ int findpath(char* command)
 			return (0);
 		}
 		snprintf(full_path, strlen(piece) + strlen(command) + 2, "%s/%s", piece, command);
-		printf("%s\n", full_path);
 		if (access(full_path, X_OK) == 0)
 		{
 			free(full_path);
 			free(path_copy);
 			return 1;
 		}
-		free(full_path);
+		else
+		{
+			free(full_path);
+		}
 		piece = strtok(NULL, ":");
 	}
 	if (access(command, X_OK) == 0)

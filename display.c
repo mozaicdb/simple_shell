@@ -1,12 +1,9 @@
 #include "shell.h"
 /**
- * main - main shell function
- * @argc: argument count
- * @argv: argument vector
- * @envp: environment variable
+ * display- main shell function
  * Return: Always 0
  */
-int main(int argc, char *argv[], char *envp[])
+int display()
 {
 	char *lineptr = NULL;
 	size_t no = 0;
@@ -39,6 +36,13 @@ int main(int argc, char *argv[], char *envp[])
 		args[i] = NULL;
 		if (i == 0)
 			continue;
+		if (strcmp(args[0], "exit") == 0)
+		{
+			free(lineptr);
+			break;
+		}
+		if (strcmp(args[0], "env") == 0)
+			print_env();
 		if (findpath(args[0]))
 			execute(args[0], args);
 	}
