@@ -20,11 +20,9 @@ void execute(char *command, char *args[])
 	}
 	else if (my_pid == 0)
 	{
-		av[0] = strdup(command);
 		if (execvp(command, args) == -1)
 			perror("execve failed");
-		free(av[0]);
-		exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 	}
 	else
 		wait(&status);
